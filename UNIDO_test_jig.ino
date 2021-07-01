@@ -11,7 +11,7 @@
 
 #define DPRINT(...)   Serial.print(__VA_ARGS__)
 #define DPRINTLN(...) Serial.println(__VA_ARGS__)
-#define BUFFER_SIZE 250  
+#define BUFFER_SIZE 250
 #define pumpRelay1 4                                 //Relay pin 1 for turn ON/OFF the autocon and S1 of starter(7)     relayVersion2:4
 #define pumpRelay2 5                                //Relay pin 2 for turn ON/OFF the S2 of starter(6)                  relayVersion2:5
 #define node1Relay 6                                //Relay pin 2 for turn ON/OFF the valve 1 (6)                       relayVersion2:6
@@ -29,10 +29,10 @@
 
 char GSM_String[BUFFER_SIZE];
 char url[100] = "sicca-api.herokuapp.com";
-char apn[20] = "tempApn";    
-double Irms = 0;  
-int tokenName = 100;     
-
+char apn[20] = "tempApn";
+double Irms = 0;
+int tokenName = 100;
+int lastButtonState = 0;
 /*---------( instances )---------*/
 RH_RF95 driver(53, 2);                                               //Singleton instance of the radio driver declared above(CHIP SELECT, INTERRUPT)
 RHReliableDatagram manager(driver, CONTROLLER_ADDRESS);              //Class to manage message delivery and receipt, using the driver
@@ -45,6 +45,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println("start");
+  
 
   pinMode(pumpRelay1, OUTPUT);                        //FOR pump 1
   pinMode(pumpRelay2, OUTPUT);                        //FOR pump 1
@@ -66,20 +67,29 @@ void setup() {
   /*----------( Manual Mode Setup )----------*/
   pinMode(manualOut, OUTPUT);                        //PINS USED FOR DETECTING MANUAL MODE
   pinMode(manualIn, INPUT);
+
   digitalWrite(manualOut, HIGH);
 
   /*----------( Current Sensor Setup)----------*/
   emon1.current(15, 6);
+
+  /*----------(LCD setup)----------------*/
+  lcd. init();
+  lcd. backlight();
+  lcd.clear();
 
   LoRa();
   SdCard();
   Relays();
   Gprs();
   Current();
-  manualMode();
+  Serial.println("Testing Auto/Manual Switch...");
+
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  manualMode();
+  disp();
 }

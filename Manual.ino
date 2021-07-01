@@ -1,16 +1,19 @@
 void manualMode()
 {
-  Serial.println("Testing Auto/Manual Switch...");
-  Serial.println("Please toggle the switch");
-  delay(5000);
-  bool switchState = digitalRead(manualIn);
-  for (int i = 0; i < 2; i++)
-  {
-    Serial.println("Please toggle the switch");
-    if (digitalRead(manualIn) == 1)
-      DPRINTLN(F("SICCA is in ManualMode"));
-    else()
-      DPRINTLN(F("SICCA is in AutoMode"));
+  
+  int buttonState = digitalRead(manualIn);
+  // compare the buttonState to its previous state
+  if (buttonState != lastButtonState) {
+    // if the state has changed, increment the counter
+    if (buttonState == HIGH) {
+      Serial.println("Sicca is in Manual Mode");
+    }
+    if (buttonState == LOW){
+      // if the current state is LOW then the button went from on to off:
+      Serial.println("Sicca is in Auto Mode");
+    }
+    // Delay a little bit to avoid bouncing
+    delay(50); 
   }
-
+  lastButtonState = buttonState;
 }
