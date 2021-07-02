@@ -74,7 +74,7 @@ void setup() {
   emon1.current(15, 6);
 
   /*----------(LCD setup)----------------*/
-  lcd. init();
+  lcd. begin();
   lcd. backlight();
   lcd.clear();
 
