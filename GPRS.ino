@@ -4,7 +4,7 @@ void Gprs()
   int statusCode = 0;                     //the variable is used for ladder type loguc of AT commands
   char url[250];                           //the array used to store alert msg in this array
   char buff[250];
-
+  
   unsigned long baudrate[9] = {4800, 9600, 19200, 38400, 57600, 74880, 115200, 230400, 250000};
   for (int i = 0; i < 9; i++)
   {
@@ -17,6 +17,8 @@ void Gprs()
     {
       DPRINT(F("Module responded at "));
       DPRINTLN(baudrate[i]);
+      sprintf(show, "GSM Baudrate: %d", baudrate[i]);
+      disp(show);
       i = 10;
     }
   }
@@ -63,6 +65,7 @@ void Gprs()
   DPRINTLN(simName);
   DPRINT(F("Set apn is: "));
   DPRINTLN(apn);
+  disp(apn);
 
   Serial1.println(F("AT"));
   readStrings(100);
@@ -77,13 +80,17 @@ void Gprs()
     if (readStrings(300) == 1)
     {
       DPRINTLN(F("Internet connected!"));
+      disp("Internet Connected!");
       i = 10;
     }
     else {
       DPRINT(F("Internet not connected, try....."));
       DPRINTLN(i);
+      if (i == 4)
+        disp("Internet Failed");
     }
   }
+
 
   //  if (flagGprs == 1)
   //  {

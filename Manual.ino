@@ -7,10 +7,12 @@ void manualMode()
     // if the state has changed, increment the counter
     if (buttonState == HIGH) {
       Serial.println("Sicca is in Manual Mode");
+      disp("Manual Mode");
     }
     if (buttonState == LOW){
       // if the current state is LOW then the button went from on to off:
       Serial.println("Sicca is in Auto Mode");
+      disp("Auto Mode");
     }
     // Delay a little bit to avoid bouncing
     delay(50); 

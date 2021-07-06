@@ -30,6 +30,7 @@
 char GSM_String[BUFFER_SIZE];
 char url[100] = "sicca-api.herokuapp.com";
 char apn[20] = "tempApn";
+char show[20];
 double Irms = 0;
 int tokenName = 100;
 int lastButtonState = 0;
@@ -91,5 +92,5 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   manualMode();
-  disp();
+//  disp();
 }

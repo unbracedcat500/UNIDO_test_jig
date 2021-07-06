@@ -3,6 +3,7 @@ void Relays()
 {
   Serial.println("Testing Relays...");
   Serial.println("Check Relay LEDs");
+  disp("Check Relay LEDs");
   delay(3000);
   digitalWrite(pumpRelay1, LOW);                     //RELAY BOARD OPTOCOUPLER IS ACTIVE LOW
   delay(1000);
@@ -37,6 +38,7 @@ void Relays()
   digitalWrite(node6Relay, HIGH);
   delay(1000);
   Serial.println("Relay Tested OK");
+  disp("Relay Tested OK");
   
   
 }
